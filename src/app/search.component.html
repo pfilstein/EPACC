@@ -1,0 +1,62 @@
+<form>
+  <div>
+    <div>
+      <label for="search-criteria">Search Query</label>
+      <input type="text" id="search-criteria" required [(ngModel)]="searchQuery" name="search-criteria"><br>
+      <label for="search-privates">Search Private Repositories</label>
+      <input type="checkbox" (ngModelChange)="PrivatesOptionChanged()" id="search-privates" [(ngModel)]="isSearchPrivates" name="search-privates">
+    </div>
+    <button (click)="Search()" [disabled]="!searchQuery">Search</button>
+    <img *ngIf="waiting" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    <br><br>
+  </div>
+</form>
+<div>
+  <table class="table" *ngIf="repos">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Owner</td>
+        <td>Description</td>
+        <td>Created At</td>
+        <td>Updated At</td>
+        <td>Size</td>
+        <td>Commits</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let repo of repos">
+        <td><a href="{{repo.url}}">{{repo.id}}</a></td>
+        <td>{{repo.name}}</td>
+        <td>{{repo.owner.login}}</td>
+        <td>{{repo.description}}</td>
+        <td>{{repo.created_at}}</td>
+        <td>{{repo.updated_at}}</td>
+        <td>{{size}}</td>
+        <td>
+          <table *ngIf="repo.commits" class="table">
+            <thead>
+              <tr>
+                <td>SHA</td>
+                <td>Author Name</td>
+                <td>Author Email</td>
+                <td>Committed At</td>
+                <td>Message</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let com of repo.commits">
+                <td><a href="{{com.url}}">{{com.sha}}</a></td>
+                <td>{{com.commit.author.name}}</td>
+                <td>{{com.commit.author.email}}</td>
+                <td>{{com.commit.author.date}}</td>
+                <td>{{com.commit.message}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
