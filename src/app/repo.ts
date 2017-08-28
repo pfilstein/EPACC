@@ -1,6 +1,3 @@
-/**
- * Created by Paul Filstein on 8/23/2017.
- */
 export interface IRepoSearchResponse {
   total_count: number,
   items: IRepo[]
